@@ -12,6 +12,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.games.AchievementsClient
 import com.google.android.gms.games.Games
 import com.google.android.gms.games.LeaderboardsClient
+import com.google.android.gms.games.PlayersClient
+import com.google.firebase.auth.PlayGamesAuthCredential
+import com.google.firebase.auth.PlayGamesAuthProvider
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -85,7 +88,7 @@ class GamesServicesPlugin(private var activity: Activity? = null) : FlutterPlugi
     gamesClient.setViewForPopups(activity.findViewById(android.R.id.content))
     gamesClient.setGravityForPopups(Gravity.TOP or Gravity.CENTER_HORIZONTAL)
 
-    finishPendingOperationWithSuccess()
+    finishPendingOperationWithSuccess(googleSignInAccount.displayName)
   }
   //endregion
 
@@ -195,9 +198,9 @@ class GamesServicesPlugin(private var activity: Activity? = null) : FlutterPlugi
   //region PendingOperation
   private class PendingOperation constructor(val method: String, val result: Result)
 
-  private fun finishPendingOperationWithSuccess() {
+  private fun finishPendingOperationWithSuccess(result: String? = "success") {
     Log.i(pendingOperation!!.method, "success")
-    pendingOperation!!.result.success("success")
+    pendingOperation!!.result.success(result)
     pendingOperation = null
   }
 
