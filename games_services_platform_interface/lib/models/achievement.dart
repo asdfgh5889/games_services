@@ -10,5 +10,9 @@ class Achievement {
     return Helpers.isPlatformAndroid ? androidID : iOSID;
   }
 
-  Achievement({this.androidID, this.iOSID = "", this.percentComplete = 100, this.steps = 0});
+  Achievement(
+      {this.androidID,
+      this.iOSID = "",
+      this.percentComplete = 100,
+      this.steps = 0});
 }

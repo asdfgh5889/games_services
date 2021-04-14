@@ -6,6 +6,7 @@ import 'package:games_services_platform_interface/models/access_point_location.d
 import 'package:games_services_platform_interface/models/achievement.dart';
 import 'package:games_services_platform_interface/models/score.dart';
 import 'game_services_platform_interface.dart';
+import 'models/player_info.dart';
 
 const MethodChannel _channel = const MethodChannel("games_services");
 
@@ -36,7 +37,8 @@ class MethodChannelGamesServices extends GamesServicesPlatform {
   }
 
   Future<String> showLeaderboards({iOSLeaderboardID = ""}) async {
-    return await _channel.invokeMethod("showLeaderboards", {"iOSLeaderboardID": iOSLeaderboardID});
+    return await _channel.invokeMethod(
+        "showLeaderboards", {"iOSLeaderboardID": iOSLeaderboardID});
   }
 
   Future<String> signIn() async {
@@ -48,10 +50,17 @@ class MethodChannelGamesServices extends GamesServicesPlatform {
   }
 
   Future<String> showAccessPoint(AccessPointLocation location) async {
-    return await _channel.invokeMethod("showAccessPoint", {"location": location.toString().split(".").last});
+    return await _channel.invokeMethod(
+        "showAccessPoint", {"location": location.toString().split(".").last});
   }
 
   Future<String> hideAccessPoint() async {
     return await _channel.invokeMethod("hideAccessPoint");
+  }
+
+  // TODO: Implement iOS
+  Future<PlayerInfo> getPlayerInfo() async {
+    final result = await _channel.invokeMethod<Map>("getPlayerInfo");
+    return PlayerInfo(result['displayName']);
   }
 }

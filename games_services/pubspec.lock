@@ -65,7 +65,7 @@ packages:
     description:
       path: "games_services_platform_interface/"
       ref: HEAD
-      resolved-ref: "8b9e09925699337eda0aaecf65e8f152c32fe8ad"
+      resolved-ref: c34dd389361160196a977a37529e210c1d39eaad
       url: "https://github.com/asdfgh5889/games_services"
     source: git
     version: "1.0.10"

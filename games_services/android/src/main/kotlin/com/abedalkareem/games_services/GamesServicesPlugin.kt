@@ -38,6 +38,7 @@ class GamesServicesPlugin(private var activity: Activity? = null) : FlutterPlugi
   private var activityPluginBinding: ActivityPluginBinding? = null
   private var channel: MethodChannel? = null
   private var pendingOperation: PendingOperation? = null
+  private var playersClient: PlayersClient? = null
   //endregion
 
   companion object {
@@ -82,13 +83,15 @@ class GamesServicesPlugin(private var activity: Activity? = null) : FlutterPlugi
     val activity = this.activity!!
     achievementClient = Games.getAchievementsClient(activity, googleSignInAccount)
     leaderboardsClient = Games.getLeaderboardsClient(activity, googleSignInAccount)
+    playersClient = Games.getPlayersClient(activity, googleSignInAccount)
 
     // Set the popups view.
     val gamesClient = Games.getGamesClient(activity, GoogleSignIn.getLastSignedInAccount(activity)!!)
     gamesClient.setViewForPopups(activity.findViewById(android.R.id.content))
     gamesClient.setGravityForPopups(Gravity.TOP or Gravity.CENTER_HORIZONTAL)
 
-    finishPendingOperationWithSuccess(googleSignInAccount.displayName)
+
+    finishPendingOperationWithSuccess()
   }
   //endregion
 
@@ -138,6 +141,16 @@ class GamesServicesPlugin(private var activity: Activity? = null) : FlutterPlugi
       result.success("success")
     }?.addOnFailureListener {
       result.error("error", it.localizedMessage, null)
+    }
+  }
+
+  private fun getPlayerInfo(result: Result) {
+    playersClient!!.currentPlayer.addOnSuccessListener {
+      val data = HashMap<String, String>()
+      data.put("displayName", it.displayName)
+      result.success(data)
+    }.addOnFailureListener {
+      result.error("error", "Cannot get current player", null)
     }
   }
 
@@ -256,6 +269,9 @@ class GamesServicesPlugin(private var activity: Activity? = null) : FlutterPlugi
       Methods.silentSignIn -> {
         silentSignIn(result)
       }
+      Methods.getPlayerInfo -> {
+        getPlayerInfo(result)
+      }
       else -> result.notImplemented()
     }
   }
@@ -269,4 +285,5 @@ object Methods {
   const val showLeaderboards = "showLeaderboards"
   const val showAchievements = "showAchievements"
   const val silentSignIn = "silentSignIn"
+  const val getPlayerInfo = "getPlayerInfo"
 }
