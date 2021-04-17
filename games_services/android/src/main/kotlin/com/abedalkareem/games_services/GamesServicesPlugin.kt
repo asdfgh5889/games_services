@@ -147,6 +147,7 @@ class GamesServicesPlugin(private var activity: Activity? = null) : FlutterPlugi
   private fun getPlayerInfo(result: Result) {
     playersClient!!.currentPlayer.addOnSuccessListener {
       val data = HashMap<String, String>()
+      data.put("id", it.playerId)
       data.put("displayName", it.displayName)
       result.success(data)
     }.addOnFailureListener {

@@ -61,6 +61,6 @@ class MethodChannelGamesServices extends GamesServicesPlatform {
   // TODO: Implement iOS
   Future<PlayerInfo> getPlayerInfo() async {
     final result = await _channel.invokeMethod<Map>("getPlayerInfo");
-    return PlayerInfo(result['displayName']);
+    return PlayerInfo(result['id'], result['displayName']);
   }
 }
