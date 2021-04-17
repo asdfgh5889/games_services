@@ -1,5 +1,6 @@
 class PlayerInfo {
+  final String id;
   final String displayName;
 
-  PlayerInfo(this.displayName);
+  PlayerInfo(this.id, this.displayName);
 }
