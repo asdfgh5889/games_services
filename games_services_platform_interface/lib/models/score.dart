@@ -9,5 +9,9 @@ class Score {
     return Helpers.isPlatformAndroid ? androidLeaderboardID : iOSLeaderboardID;
   }
 
-  Score({this.iOSLeaderboardID, this.androidLeaderboardID, this.value});
+  Score({
+    required this.iOSLeaderboardID,
+    required this.androidLeaderboardID,
+    required this.value,
+  });
 }

@@ -6,13 +6,14 @@ class Achievement {
   double percentComplete;
   int steps;
 
-  String get id {
+  String? get id {
     return Helpers.isPlatformAndroid ? androidID : iOSID;
   }
 
-  Achievement(
-      {this.androidID,
-      this.iOSID = "",
-      this.percentComplete = 100,
-      this.steps = 0});
+  Achievement({
+    required this.androidID,
+    required this.iOSID,
+    this.percentComplete = 100,
+    this.steps = 0,
+  });
 }

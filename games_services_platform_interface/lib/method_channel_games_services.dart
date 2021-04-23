@@ -11,37 +11,37 @@ import 'models/player_info.dart';
 const MethodChannel _channel = const MethodChannel("games_services");
 
 class MethodChannelGamesServices extends GamesServicesPlatform {
-  Future<String> unlock({achievement: Achievement}) async {
+  Future<String?> unlock({achievement: Achievement}) async {
     return await _channel.invokeMethod("unlock", {
       "achievementID": achievement.id,
       "percentComplete": achievement.percentComplete,
     });
   }
 
-  Future<String> submitScore({score: Score}) async {
+  Future<String?> submitScore({score: Score}) async {
     return await _channel.invokeMethod("submitScore", {
       "leaderboardID": score.leaderboardID,
       "value": score.value,
     });
   }
 
-  Future<String> increment({achievement: Achievement}) async {
+  Future<String?> increment({achievement: Achievement}) async {
     return await _channel.invokeMethod("increment", {
       "achievementID": achievement.id,
       "steps": achievement.steps,
     });
   }
 
-  Future<String> showAchievements() async {
+  Future<String?> showAchievements() async {
     return await _channel.invokeMethod("showAchievements");
   }
 
-  Future<String> showLeaderboards({iOSLeaderboardID = ""}) async {
+  Future<String?> showLeaderboards({iOSLeaderboardID = ""}) async {
     return await _channel.invokeMethod(
         "showLeaderboards", {"iOSLeaderboardID": iOSLeaderboardID});
   }
 
-  Future<String> signIn() async {
+  Future<String?> signIn() async {
     if (Helpers.isPlatformAndroid) {
       return await _channel.invokeMethod("silentSignIn");
     } else {
@@ -49,18 +49,20 @@ class MethodChannelGamesServices extends GamesServicesPlatform {
     }
   }
 
-  Future<String> showAccessPoint(AccessPointLocation location) async {
+  Future<String?> showAccessPoint(AccessPointLocation location) async {
     return await _channel.invokeMethod(
         "showAccessPoint", {"location": location.toString().split(".").last});
   }
 
-  Future<String> hideAccessPoint() async {
+  Future<String?> hideAccessPoint() async {
     return await _channel.invokeMethod("hideAccessPoint");
   }
 
-  // TODO: Implement iOS
-  Future<PlayerInfo> getPlayerInfo() async {
+  Future<PlayerInfo?> getPlayerInfo() async {
     final result = await _channel.invokeMethod<Map>("getPlayerInfo");
+    if (result == null || result['id'] == null || result['displayName'] == null)
+      return null;
+
     return PlayerInfo(result['id'], result['displayName']);
   }
 }
