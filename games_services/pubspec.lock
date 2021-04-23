@@ -65,7 +65,7 @@ packages:
     description:
       path: "games_services_platform_interface/"
       ref: HEAD
-      resolved-ref: c34dd389361160196a977a37529e210c1d39eaad
+      resolved-ref: "0b2f25259fbf34c74e5794f3b9167c160fc49f6a"
       url: "https://github.com/asdfgh5889/games_services"
     source: git
     version: "1.0.10"
@@ -108,7 +108,7 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.0"
+    version: "1.8.1"
   stack_trace:
     dependency: transitive
     description:

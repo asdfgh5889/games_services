@@ -29,6 +29,27 @@ public class SwiftGamesServicesPlugin: NSObject, FlutterPlugin {
     }
   }
 
+  // MARK: Player Info
+    
+    func getPlayerInfo(result: @escaping FlutterResult) {
+        let player = GKLocalPlayer.local
+        if player.isAuthenticated {
+            var playerId = ""
+            if #available(iOS 12.4, *) {
+                playerId = player.gamePlayerID
+            } else {
+                playerId = player.playerID
+            }
+            
+            result([
+                "id": playerId,
+                "displayName": player.displayName
+            ])
+        } else {
+            result(nil)
+        }
+    }
+    
   // MARK: - Leaderboard
 
   func showLeaderboardWith(identifier: String) {
@@ -128,6 +149,8 @@ public class SwiftGamesServicesPlugin: NSObject, FlutterPlugin {
     case "showAccessPoint":
       let location = (arguments?["location"] as? String) ?? ""
       showAccessPoint(location: location)
+    case "getPlayerInfo":
+        getPlayerInfo(result: result)
     default:
       result("unimplemented")
       break
