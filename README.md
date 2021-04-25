@@ -75,6 +75,15 @@ GamesServices.unlock(achievement: Achievement(androidID: 'android_id',
 *Note: You need to pass the achievement id for iOS in case of iOS and the achievement id for android in case of android.
 the ```percentComplete``` is required in case of iOS but not android.*  
 
+#### Release
+Make sure you've uploaded App integrity keys:
+ - Go to Google Developer Console
+ - Click All Applications > Your Application
+ - Go to Setup > App integrity
+ - Notice there is an "Upload Certificate" and an "App Signing Certificate".
+ - Copy the SHA1 from the APP SIGNING CERTIFICATE. (After all that keystore rigmorale, they fail to mention this part in documentation!)
+ - Create a new connected app (or existing) in Google Cloud Console Project and then PASTE THE SHA1 FROM THE APP SIGNING CERTIFICATE HERE AND BE SURE YOUR PACKAGE NAME IS CORRECT.
+
 ## Installing  
 Simply add the following line to your pubspec.yaml file:  
 ``` yaml
