@@ -76,6 +76,8 @@ GamesServices.unlock(achievement: Achievement(androidID: 'android_id',
 the ```percentComplete``` is required in case of iOS but not android.*  
 
 #### Release
+Make suer you've setup OAuth consent screen
+
 Make sure you've uploaded App integrity keys:
  - Go to Google Developer Console
  - Click All Applications > Your Application
